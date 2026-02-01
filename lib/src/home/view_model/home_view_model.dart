@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:todo/src/models/todo_model.dart';
 
@@ -17,6 +19,7 @@ class HomeViewModel extends GetxController {
   }
 
   void toggleTodoStatus(int index) {
+    log(index.toString());
     todos[index].isComplete = !todos[index].isComplete;
     todos.refresh();
   }

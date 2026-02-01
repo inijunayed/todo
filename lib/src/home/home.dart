@@ -4,6 +4,8 @@ import 'package:get/state_manager.dart';
 
 import 'package:todo/src/home/view_model/home_view_model.dart';
 import 'package:todo/src/home/widgets/add_todo_dialogue.dart';
+import 'package:todo/src/home/widgets/todo_card.dart';
+import 'package:todo/src/models/todo_model.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -17,14 +19,37 @@ class HomePage extends StatelessWidget {
           itemCount: controller.todos.length,
           itemBuilder: (context, index) {
             final todoData = controller.todos[index];
-            return ListTile(title: Text(todoData.title));
+            return TodoCard(
+              todo: todoData,
+              onToggle: () {
+                // log("message");
+                controller.toggleTodoStatus(index);
+              },
+            );
           },
         ),
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(context: context, builder: (context) => AddTodoDialogue());
+        onPressed: () async {
+          final data =
+              await showDialog(
+                    context: context,
+                    builder: (context) => AddTodoDialogue(),
+                  )
+                  as List;
+
+          if (data.isEmpty) {
+            return;
+          }
+
+          final newTodo = TodoModel(
+            title: data[0],
+            description: data[1],
+            isComplete: false,
+          );
+
+          controller.addTodo(newTodo);
         },
 
         child: Icon(Icons.add),

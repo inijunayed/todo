@@ -8,8 +8,4 @@ class TodoModel {
     required this.description,
     required this.isComplete,
   });
-
-  set isCompleted(bool value) {
-    isComplete = value;
-  }
 }
