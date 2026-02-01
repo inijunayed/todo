@@ -13,7 +13,23 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Todo App")),
+      appBar: AppBar(
+        title: Text("Todo App"),
+        actions: [
+          Obx(
+            () => SizedBox(
+              child: controller.todos.any((element) => element.isComplete)
+                  ? IconButton(
+                      onPressed: () {
+                        controller.deleteDoneTodos();
+                      },
+                      icon: Icon(Icons.delete),
+                    )
+                  : null,
+            ),
+          ),
+        ],
+      ),
       body: Obx(
         () => ListView.builder(
           itemCount: controller.todos.length,

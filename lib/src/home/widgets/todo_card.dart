@@ -33,7 +33,7 @@ class TodoCard extends StatelessWidget {
                   todo.title,
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.green,
+                    color: todo.isComplete ? Colors.grey : Colors.green,
                     fontWeight: FontWeight.bold,
                     decoration: todo.isComplete
                         ? TextDecoration.lineThrough

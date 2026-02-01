@@ -67,6 +67,7 @@ class AddTodoDialogue extends StatelessWidget {
                       ),
                       onPressed: () {
                         // Add todo logic
+                        Navigator.pop(context);
                       },
                     ),
                     CustomButton(
