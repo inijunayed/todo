@@ -13,25 +13,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Todo App"),
-        actions: [
-          Obx(
-            () => SizedBox(
-              child: controller.todos.any((element) => element.isComplete)
-                  ? IconButton(
-                      onPressed: () {
-                        controller.deleteDoneTodos();
-                      },
-                      icon: Icon(Icons.delete),
-                    )
-                  : null,
-            ),
-          ),
-        ],
-      ),
-      body: Obx(
-        () => ListView.builder(
+      appBar: AppBar(title: Text("Todo App")),
+      body: Obx(() {
+        if (controller.todos.isEmpty) {
+          return Center(child: Text("No todo found"));
+        }
+
+        return ListView.builder(
           itemCount: controller.todos.length,
           itemBuilder: (context, index) {
             final todoData = controller.todos[index];
@@ -41,10 +29,14 @@ class HomePage extends StatelessWidget {
                 // log("message");
                 controller.toggleTodoStatus(index);
               },
+
+              onDelete: () {
+                controller.deleteByIndex(index);
+              },
             );
           },
-        ),
-      ),
+        );
+      }),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

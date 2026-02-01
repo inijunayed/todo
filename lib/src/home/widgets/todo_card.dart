@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:todo/src/models/todo_model.dart';
 
 class TodoCard extends StatelessWidget {
-  const TodoCard({super.key, required this.todo, this.onToggle});
+  const TodoCard({super.key, required this.todo, this.onToggle, this.onDelete});
   final TodoModel todo;
   final VoidCallback? onToggle;
+
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +57,19 @@ class TodoCard extends StatelessWidget {
             ),
           ),
 
-          IconButton(
-            onPressed: todo.isComplete ? null : onToggle,
-            icon: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Icon(
-                todo.isComplete
-                    ? Icons.check_box
-                    : Icons.check_box_outline_blank,
-              ),
-            ),
-          ),
+          !todo.isComplete
+              ? IconButton(
+                  onPressed: todo.isComplete ? null : onToggle,
+                  icon: Icon(
+                    todo.isComplete
+                        ? Icons.check_box
+                        : Icons.check_box_outline_blank,
+                  ),
+                )
+              : IconButton(
+                  onPressed: onDelete,
+                  icon: Icon(Icons.delete, color: Colors.red),
+                ),
         ],
       ),
     );

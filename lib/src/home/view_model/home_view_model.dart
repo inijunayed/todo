@@ -28,4 +28,9 @@ class HomeViewModel extends GetxController {
     todos.removeWhere((element) => element.isComplete == true);
     todos.refresh();
   }
+
+  void deleteByIndex(int index) {
+    todos.removeAt(index);
+    todos.refresh();
+  }
 }
